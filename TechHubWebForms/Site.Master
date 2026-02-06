@@ -1,0 +1,326 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TechHubWebForms.SiteMaster" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= Page.Title %> - TechHub</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="<%= ResolveUrl("~/favicon.ico") %>" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link href="<%= ResolveUrl("~/Content/Site.css") %>" rel="stylesheet" />
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server"></asp:ScriptManager>
+
+        <!-- NAVIGATION BAR -->
+        <nav class="navbar">
+            <div class="navbar-wrapper">
+                <div class="navbar-content">
+
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+
+                    <!-- Logo -->
+                    <a class="navbar-brand" href="<%= ResolveUrl("~/") %>">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>TechHub</span>
+                    </a>
+
+                    <!-- Desktop Navigation Links -->
+                    <div class="desktop-nav">
+                        <a class="nav-link" href="<%= ResolveUrl("~/") %>">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                        <a class="nav-link" href="<%= ResolveUrl("~/Products/Default.aspx") %>">
+                            <i class="fas fa-shopping-bag"></i> Products
+                        </a>
+                        <a class="nav-link" href="<%= ResolveUrl("~/About.aspx") %>">
+                            <i class="fas fa-info-circle"></i> About
+                        </a>
+                        <a class="nav-link" href="<%= ResolveUrl("~/Contact.aspx") %>">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a>
+                    </div>
+
+                    <!-- Right Side Icons -->
+                    <div class="navbar-actions">
+                        <!-- Search Icon -->
+                        <button class="icon-btn" type="button" title="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+
+                        <!-- ✅ FIXED: Cart Icon with Dynamic Badge -->
+                        <a class="icon-btn cart-icon" href="<%= ResolveUrl("~/Cart/Cart.aspx") %>" title="Shopping Cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <asp:Label ID="lblCartCount" runat="server" CssClass="badge" Text="0" Visible="false"></asp:Label>
+                        </a>
+
+                        <!-- User Menu -->
+                        <div class="user-menu">
+                            <button class="icon-btn user-btn" type="button" title="Account">
+                                <i class="fas fa-user"></i>
+                            </button>
+
+                            <div class="user-dropdown">
+                                <% if (IsUserAuthenticated) { %>
+                                    <!-- Logged In Menu -->
+                                    <div class="dropdown-user-info">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span><%= Session["UserName"] %></span>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+
+                                    <a href="<%= ResolveUrl("~/Account/Profile.aspx") %>" class="dropdown-item">
+                                        <i class="fas fa-user-edit"></i> My Profile
+                                    </a>
+                                    <!-- ✅ FIXED: Changed from ~/Orders/MyOrders.aspx to ~/Cart/CartHistory.aspx -->
+                                    <a href="<%= ResolveUrl("~/Cart/CartHistory.aspx") %>" class="dropdown-item">
+                                        <i class="fas fa-shopping-bag"></i> My Orders
+                                    </a>
+                                    <a href="<%= ResolveUrl("~/Wishlist.aspx") %>" class="dropdown-item">
+                                        <i class="fas fa-heart"></i> Wishlist
+                                    </a>
+
+                                    <% if (Session["UserRole"] != null && Session["UserRole"].ToString() == "Admin") { %>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="<%= ResolveUrl("~/Admin/Dashboard.aspx") %>" class="dropdown-item">
+                                            <i class="fas fa-cog"></i> Admin Panel
+                                        </a>
+                                    <% } %>
+
+                                    <div class="dropdown-divider"></div>
+                                    <asp:LinkButton
+                                        ID="btnLogout"
+                                        runat="server"
+                                        CssClass="dropdown-item dropdown-item-logout"
+                                        OnClick="btnLogout_Click">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </asp:LinkButton>
+                                <% } else { %>
+                                    <!-- Guest Menu -->
+                                    <a href="<%= ResolveUrl("~/Account/Login.aspx") %>" class="dropdown-item">
+                                        <i class="fas fa-sign-in-alt"></i> Login
+                                    </a>
+                                    <a href="<%= ResolveUrl("~/Account/Register.aspx") %>" class="dropdown-item">
+                                        <i class="fas fa-user-plus"></i> Register
+                                    </a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Menu -->
+            <div class="mobile-nav" id="mobileNav">
+                <div class="mobile-nav-content">
+                    <a class="mobile-nav-link" href="<%= ResolveUrl("~/") %>">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a class="mobile-nav-link" href="<%= ResolveUrl("~/Products/Default.aspx") %>">
+                        <i class="fas fa-shopping-bag"></i> Products
+                    </a>
+                    <a class="mobile-nav-link" href="<%= ResolveUrl("~/About.aspx") %>">
+                        <i class="fas fa-info-circle"></i> About
+                    </a>
+                    <a class="mobile-nav-link" href="<%= ResolveUrl("~/Contact.aspx") %>">
+                        <i class="fas fa-envelope"></i> Contact
+                    </a>
+
+                    <hr class="mobile-nav-divider" />
+
+                    <% if (IsUserAuthenticated) { %>
+                        <!-- Logged In Mobile Menu -->
+                        <div class="mobile-user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <span><%= Session["UserName"] %></span>
+                        </div>
+
+                        <a class="mobile-nav-link" href="<%= ResolveUrl("~/Account/Profile.aspx") %>">
+                            <i class="fas fa-user-edit"></i> My Profile
+                        </a>
+                        <!-- ✅ FIXED: Changed from ~/Orders/MyOrders.aspx to ~/Cart/CartHistory.aspx -->
+                        <a class="mobile-nav-link" href="<%= ResolveUrl("~/Cart/CartHistory.aspx") %>">
+                            <i class="fas fa-shopping-bag"></i> My Orders
+                        </a>
+                        <a class="mobile-nav-link" href="<%= ResolveUrl("~/Wishlist.aspx") %>">
+                            <i class="fas fa-heart"></i> Wishlist
+                        </a>
+
+                        <% if (Session["UserRole"] != null && Session["UserRole"].ToString() == "Admin") { %>
+                            <a class="mobile-nav-link" href="<%= ResolveUrl("~/Admin/Dashboard.aspx") %>">
+                                <i class="fas fa-cog"></i> Admin Panel
+                            </a>
+                        <% } %>
+
+                        <asp:LinkButton
+                            ID="btnMobileLogout"
+                            runat="server"
+                            CssClass="mobile-nav-link mobile-nav-logout"
+                            OnClick="btnLogout_Click">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </asp:LinkButton>
+                    <% } else { %>
+                        <!-- Guest Mobile Menu -->
+                        <a class="mobile-nav-link" href="<%= ResolveUrl("~/Account/Login.aspx") %>">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a class="mobile-nav-link" href="<%= ResolveUrl("~/Account/Register.aspx") %>">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+
+                    <!-- Footer Links -->
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="<%= ResolveUrl("~/") %>">Home</a></li>
+                            <li><a href="<%= ResolveUrl("~/Products/Default.aspx") %>">Products</a></li>
+                            <li><a href="<%= ResolveUrl("~/About.aspx") %>">About Us</a></li>
+                            <li><a href="<%= ResolveUrl("~/Contact.aspx") %>">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Customer Service -->
+                    <div class="footer-section">
+                        <h4>Customer Service</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="<%= ResolveUrl("~/Cart/CartHistory.aspx") %>">Track Order</a></li>
+                            <li><a href="#">Returns</a></li>
+                            <!-- ✅ FIXED: Removed Feedback.aspx link (doesn't exist yet) -->
+                            <li><a href="<%= ResolveUrl("~/Contact.aspx") %>">Feedback</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="footer-section">
+                        <h4>Contact Us</h4>
+                        <ul class="footer-links">
+                            <li><i class="fas fa-envelope"></i> info@techhub.com</li>
+                            <li><i class="fas fa-phone"></i> +977 98012-34567</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</li>
+                        </ul>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="footer-section">
+                        <h4>Follow Us</h4>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon" title="Facebook">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="social-icon" title="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-icon" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-icon" title="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Copyright -->
+                <div class="footer-bottom">
+                    <p>&copy; <%= DateTime.Now.Year %> TechHub. All rights reserved.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <span>|</span>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Mobile Menu Toggle Script -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+                const mobileNav = document.getElementById('mobileNav');
+                const body = document.body;
+
+                if (mobileMenuToggle && mobileNav) {
+                    mobileMenuToggle.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        mobileNav.classList.toggle('active');
+                        body.classList.toggle('mobile-menu-open');
+
+                        const icon = mobileMenuToggle.querySelector('i');
+                        if (mobileNav.classList.contains('active')) {
+                            icon.classList.remove('fa-bars');
+                            icon.classList.add('fa-times');
+                        } else {
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+
+                    document.addEventListener('click', function (event) {
+                        if (!mobileMenuToggle.contains(event.target) && !mobileNav.contains(event.target)) {
+                            mobileNav.classList.remove('active');
+                            body.classList.remove('mobile-menu-open');
+                            const icon = mobileMenuToggle.querySelector('i');
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+                }
+
+                const userBtn = document.querySelector('.user-btn');
+                const userDropdown = document.querySelector('.user-dropdown');
+
+                if (userBtn && userDropdown) {
+                    userBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        userDropdown.classList.toggle('active');
+                    });
+
+                    document.addEventListener('click', function () {
+                        userDropdown.classList.remove('active');
+                    });
+                }
+            });
+        </script>
+    </form>
+</body>
+</html>
