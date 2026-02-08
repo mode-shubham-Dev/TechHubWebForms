@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TechHubWebForms.DAL;
@@ -99,6 +101,84 @@ namespace TechHubWebForms.Admin
         }
 
         /// <summary>
+        /// ✅ NEW: Helper method to get image URL for display
+        /// </summary>
+        protected string GetImageUrl(object imageUrl)
+        {
+            string url = imageUrl?.ToString();
+
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                // Return placeholder if no image
+                return ResolveUrl("~/Content/Images/placeholder.png");
+            }
+
+            // If it's a relative path, resolve it
+            if (!url.StartsWith("http"))
+            {
+                return ResolveUrl(url);
+            }
+
+            return url;
+        }
+
+        /// <summary>
+        /// ✅ NEW: Upload image file and return saved path
+        /// </summary>
+        private string UploadImage(FileUpload fileUpload)
+        {
+            if (fileUpload.HasFile)
+            {
+                try
+                {
+                    // Validate file extension
+                    string fileExtension = Path.GetExtension(fileUpload.FileName).ToLower();
+                    string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+
+                    if (!allowedExtensions.Contains(fileExtension))
+                    {
+                        ShowMessage("Invalid file type. Only JPG, PNG, and GIF are allowed.", false);
+                        return null;
+                    }
+
+                    // Validate file size (2MB max)
+                    if (fileUpload.PostedFile.ContentLength > 2097152) // 2MB in bytes
+                    {
+                        ShowMessage("File size must be less than 2MB.", false);
+                        return null;
+                    }
+
+                    // Generate unique filename
+                    string fileName = Guid.NewGuid().ToString() + fileExtension;
+
+                    // Get server path
+                    string folderPath = Server.MapPath("~/Content/Images/Products/");
+
+                    // Create directory if doesn't exist
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    // Save file
+                    string filePath = Path.Combine(folderPath, fileName);
+                    fileUpload.SaveAs(filePath);
+
+                    // Return relative path for database
+                    return "~/Content/Images/Products/" + fileName;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error uploading image: " + ex.Message);
+                    ShowMessage("Error uploading image: " + ex.Message, false);
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Toggle Add Product form visibility
         /// </summary>
         protected void btnToggleForm_Click(object sender, EventArgs e)
@@ -108,7 +188,7 @@ namespace TechHubWebForms.Admin
         }
 
         /// <summary>
-        /// Add new product
+        /// ✅ UPDATED: Add new product with image upload
         /// </summary>
         protected void btnAddProduct_Click(object sender, EventArgs e)
         {
@@ -119,6 +199,11 @@ namespace TechHubWebForms.Admin
             {
                 using (var context = new TechHubContext())
                 {
+                    // ✅ Upload images
+                    string imageUrl1 = UploadImage(fuImage1);
+                    string imageUrl2 = UploadImage(fuImage2);
+                    string imageUrl3 = UploadImage(fuImage3);
+
                     var product = new Product
                     {
                         Name = txtProductName.Text.Trim(),
@@ -128,9 +213,9 @@ namespace TechHubWebForms.Admin
                         StockQuantity = Convert.ToInt32(txtStock.Text),
                         Description = txtDescription.Text.Trim(),
                         Specifications = txtSpecifications.Text.Trim(),
-                        ImageURL1 = txtImageURL1.Text.Trim(),
-                        ImageURL2 = txtImageURL2.Text.Trim(),
-                        ImageURL3 = txtImageURL3.Text.Trim(),
+                        ImageURL1 = imageUrl1, // ✅ From file upload
+                        ImageURL2 = imageUrl2, // ✅ From file upload
+                        ImageURL3 = imageUrl3, // ✅ From file upload
                         IsActive = chkIsActive.Checked,
                         DateAdded = DateTime.Now
                     };
@@ -174,10 +259,10 @@ namespace TechHubWebForms.Admin
             txtStock.Text = "";
             txtDescription.Text = "";
             txtSpecifications.Text = "";
-            txtImageURL1.Text = "";
-            txtImageURL2.Text = "";
-            txtImageURL3.Text = "";
             chkIsActive.Checked = true;
+
+            // Note: FileUpload controls don't have a clear method
+            // They reset automatically on postback
         }
 
         /// <summary>
@@ -198,7 +283,7 @@ namespace TechHubWebForms.Admin
         }
 
         /// <summary>
-        /// GridView Row Data Bound - ✅ FIXED: Properly load categories and set selected value
+        /// GridView Row Data Bound
         /// </summary>
         protected void gvProducts_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -225,7 +310,7 @@ namespace TechHubWebForms.Admin
                             ddlEditCategory.DataBind();
                         }
 
-                        // ✅ FIX: Set the selected value from the current product
+                        // Set the selected value from the current product
                         Product product = (Product)e.Row.DataItem;
                         if (product != null)
                         {
@@ -250,7 +335,7 @@ namespace TechHubWebForms.Admin
         }
 
         /// <summary>
-        /// GridView Update product - ✅ FIXED: Added Brand update
+        /// GridView Update product
         /// </summary>
         protected void gvProducts_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {

@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <!-- ADMIN HEADER -->
     <div class="admin-header">
         <div class="container">
             <div class="admin-header-content">
@@ -21,7 +20,6 @@
         </div>
     </div>
 
-    <!-- ADMIN NAVIGATION TABS -->
     <div class="admin-nav-tabs">
         <div class="container">
             <div class="admin-tabs">
@@ -44,11 +42,9 @@
         </div>
     </div>
 
-    <!-- MAIN ADMIN CONTENT -->
     <div class="admin-content">
         <div class="container">
 
-            <!-- SUCCESS/ERROR MESSAGE -->
             <asp:Panel ID="pnlMessage" runat="server" Visible="false" CssClass="alert-message">
                 <div id="divMessage" runat="server" class="message-content"></div>
                 <button type="button" class="message-close" onclick="this.parentElement.style.display='none';">
@@ -56,7 +52,6 @@
                 </button>
             </asp:Panel>
 
-            <!-- ADD NEW PRODUCT SECTION -->
             <div class="admin-section">
                 <div class="section-header-admin">
                     <h2 class="section-title-admin">
@@ -69,7 +64,6 @@
                     <div class="form-container">
                         <div class="form-grid">
                             
-                            <!-- Product Name -->
                             <div class="form-group">
                                 <label class="form-label">Product Name <span class="required">*</span></label>
                                 <asp:TextBox ID="txtProductName" runat="server" CssClass="form-control" MaxLength="200" placeholder="e.g., iPhone 15 Pro Max"></asp:TextBox>
@@ -77,7 +71,6 @@
                                     ErrorMessage="Product name is required" CssClass="field-error" Display="Dynamic" ValidationGroup="AddProduct"></asp:RequiredFieldValidator>
                             </div>
 
-                            <!-- Brand -->
                             <div class="form-group">
                                 <label class="form-label">Brand <span class="required">*</span></label>
                                 <asp:TextBox ID="txtBrand" runat="server" CssClass="form-control" MaxLength="100" placeholder="e.g., Apple"></asp:TextBox>
@@ -85,7 +78,6 @@
                                     ErrorMessage="Brand is required" CssClass="field-error" Display="Dynamic" ValidationGroup="AddProduct"></asp:RequiredFieldValidator>
                             </div>
 
-                            <!-- Category -->
                             <div class="form-group">
                                 <label class="form-label">Category <span class="required">*</span></label>
                                 <asp:DropDownList ID="ddlCategory" runat="server" CssClass="form-control">
@@ -95,7 +87,6 @@
                                     InitialValue="0" ErrorMessage="Please select a category" CssClass="field-error" Display="Dynamic" ValidationGroup="AddProduct"></asp:RequiredFieldValidator>
                             </div>
 
-                            <!-- Price -->
                             <div class="form-group">
                                 <label class="form-label">Price (NPR) <span class="required">*</span></label>
                                 <asp:TextBox ID="txtPrice" runat="server" CssClass="form-control" TextMode="Number" step="0.01" placeholder="0.00"></asp:TextBox>
@@ -106,7 +97,6 @@
                                     ErrorMessage="Price must be greater than 0" CssClass="field-error" Display="Dynamic" ValidationGroup="AddProduct"></asp:RangeValidator>
                             </div>
 
-                            <!-- Stock Quantity -->
                             <div class="form-group">
                                 <label class="form-label">Stock Quantity <span class="required">*</span></label>
                                 <asp:TextBox ID="txtStock" runat="server" CssClass="form-control" TextMode="Number" placeholder="0"></asp:TextBox>
@@ -117,39 +107,54 @@
                                     ErrorMessage="Stock must be between 0 and 999999" CssClass="field-error" Display="Dynamic" ValidationGroup="AddProduct"></asp:RangeValidator>
                             </div>
 
-                            <!-- Image URL 1 -->
                             <div class="form-group">
-                                <label class="form-label">Image URL 1</label>
-                                <asp:TextBox ID="txtImageURL1" runat="server" CssClass="form-control" MaxLength="255" placeholder="https://example.com/image1.jpg"></asp:TextBox>
+                                <label class="form-label">Product Image 1</label>
+                                <div class="file-upload-wrapper">
+                                    <asp:FileUpload ID="fuImage1" runat="server" CssClass="file-upload-input" accept="image/*" onchange="updateFileName(this, 'filename1')" />
+                                    <div class="file-upload-label" id="uploadLabel1">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span id="filename1">Choose Image</span>
+                                    </div>
+                                </div>
+                                <small class="form-text">Recommended: 400x400px, Max 2MB (JPG, PNG, GIF)</small>
                             </div>
 
-                            <!-- Image URL 2 -->
                             <div class="form-group">
-                                <label class="form-label">Image URL 2</label>
-                                <asp:TextBox ID="txtImageURL2" runat="server" CssClass="form-control" MaxLength="255" placeholder="https://example.com/image2.jpg"></asp:TextBox>
+                                <label class="form-label">Product Image 2</label>
+                                <div class="file-upload-wrapper">
+                                    <asp:FileUpload ID="fuImage2" runat="server" CssClass="file-upload-input" accept="image/*" onchange="updateFileName(this, 'filename2')" />
+                                    <div class="file-upload-label" id="uploadLabel2">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span id="filename2">Choose Image</span>
+                                    </div>
+                                </div>
+                                <small class="form-text">Optional additional image</small>
                             </div>
 
-                            <!-- Image URL 3 -->
                             <div class="form-group">
-                                <label class="form-label">Image URL 3</label>
-                                <asp:TextBox ID="txtImageURL3" runat="server" CssClass="form-control" MaxLength="255" placeholder="https://example.com/image3.jpg"></asp:TextBox>
+                                <label class="form-label">Product Image 3</label>
+                                <div class="file-upload-wrapper">
+                                    <asp:FileUpload ID="fuImage3" runat="server" CssClass="file-upload-input" accept="image/*" onchange="updateFileName(this, 'filename3')" />
+                                    <div class="file-upload-label" id="uploadLabel3">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span id="filename3">Choose Image</span>
+                                    </div>
+                                </div>
+                                <small class="form-text">Optional additional image</small>
                             </div>
 
-                            <!-- Description (Full Width) -->
                             <div class="form-group form-group-full">
                                 <label class="form-label">Description</label>
                                 <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine" 
                                     Rows="3" MaxLength="1000" placeholder="Enter product description..."></asp:TextBox>
                             </div>
 
-                            <!-- Specifications (Full Width) -->
                             <div class="form-group form-group-full">
                                 <label class="form-label">Specifications</label>
                                 <asp:TextBox ID="txtSpecifications" runat="server" CssClass="form-control" TextMode="MultiLine" 
                                     Rows="3" placeholder="Enter product specifications (one per line)..."></asp:TextBox>
                             </div>
 
-                            <!-- Active Status -->
                             <div class="form-group">
                                 <label class="form-label">Status</label>
                                 <div class="checkbox-wrapper">
@@ -160,7 +165,6 @@
 
                         </div>
 
-                        <!-- Form Actions -->
                         <div class="form-actions">
                             <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" CssClass="btn-primary-admin" 
                                 OnClick="btnAddProduct_Click" ValidationGroup="AddProduct" />
@@ -171,7 +175,6 @@
                 </asp:Panel>
             </div>
 
-            <!-- PRODUCTS LIST SECTION -->
             <div class="admin-section">
                 <div class="section-header-admin">
                     <h2 class="section-title-admin">
@@ -199,6 +202,15 @@
                                 <Columns>
                                     <asp:BoundField DataField="ProductID" HeaderText="ID" ReadOnly="True" />
                                     
+                                    <asp:TemplateField HeaderText="Image">
+                                        <ItemTemplate>
+                                            <asp:Image ID="imgProduct" runat="server" 
+                                                ImageUrl='<%# GetImageUrl(Eval("ImageURL1")) %>' 
+                                                CssClass="product-thumb" 
+                                                AlternateText='<%# Eval("Name") %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
                                     <asp:TemplateField HeaderText="Product Name">
                                         <ItemTemplate>
                                             <strong><%# Eval("Name") %></strong><br />
@@ -272,5 +284,25 @@
 
         </div>
     </div>
+
+    <script type="text/javascript">
+        function updateFileName(input, spanId) {
+            var fileName = input.files && input.files.length > 0 ? input.files[0].name : 'Choose Image';
+            var fileSize = input.files && input.files.length > 0 ? (input.files[0].size / 1024 / 1024).toFixed(2) : 0;
+            
+            var span = document.getElementById(spanId);
+            var label = span.parentElement;
+            
+            if (input.files && input.files.length > 0) {
+                span.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i> ' + fileName + ' (' + fileSize + ' MB)';
+                label.style.borderColor = '#10b981';
+                label.style.background = '#d1fae5';
+            } else {
+                span.textContent = 'Choose Image';
+                label.style.borderColor = '#cbd5e1';
+                label.style.background = '#f8fafc';
+            }
+        }
+    </script>
 
 </asp:Content>

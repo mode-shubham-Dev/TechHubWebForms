@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TechHubWebForms.DAL;
 using TechHubWebForms.Models;
+using TechHubWebForms.Helpers;  // ✅ ADDED for EmailHelper
 using CartModel = TechHubWebForms.Models.Cart;
 
 namespace TechHubWebForms.Checkout
@@ -322,6 +323,37 @@ namespace TechHubWebForms.Checkout
                     // Save all changes
                     context.SaveChanges();
 
+                    // ✅ NEW: Send order confirmation email
+                    try
+                    {
+                        // Reload order with details for email
+                        var orderWithDetails = context.Orders
+                            .Include(o => o.OrderDetails.Select(od => od.Product))
+                            .FirstOrDefault(o => o.OrderID == order.OrderID);
+
+                        if (orderWithDetails != null)
+                        {
+                            string orderDetails = BuildOrderDetailsHtml(orderWithDetails);
+                            bool emailSent = EmailHelper.SendOrderConfirmation(
+                                user.Email,
+                                user.Name,
+                                orderWithDetails.OrderID,
+                                orderWithDetails.TotalAmount,
+                                orderDetails
+                            );
+
+                            if (emailSent)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Order confirmation email sent to {user.Email}");
+                            }
+                        }
+                    }
+                    catch (Exception emailEx)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Email send failed: {emailEx.Message}");
+                        // Continue even if email fails - don't block the order
+                    }
+
                     // Redirect to order confirmation page
                     Response.Redirect($"~/Checkout/OrderConfirmation.aspx?orderId={order.OrderID}");
                 }
@@ -331,6 +363,26 @@ namespace TechHubWebForms.Checkout
                 System.Diagnostics.Debug.WriteLine("Error placing order: " + ex.Message);
                 ShowMessage("Failed to place order. Please try again.", false);
             }
+        }
+
+        /// <summary>
+        /// Build HTML for order details email
+        /// </summary>
+        private string BuildOrderDetailsHtml(Models.Order order)
+        {
+            var html = "<ul style='padding-left: 20px;'>";
+
+            foreach (var item in order.OrderDetails)
+            {
+                html += $@"
+                    <li style='margin-bottom: 10px;'>
+                        <strong>{item.Product.Name}</strong><br>
+                        Quantity: {item.Quantity} × NPR {item.UnitPrice:N0} = NPR {item.Subtotal:N0}
+                    </li>";
+            }
+
+            html += "</ul>";
+            return html;
         }
 
         private void ShowMessage(string message, bool isSuccess)

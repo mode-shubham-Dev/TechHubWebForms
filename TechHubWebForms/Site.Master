@@ -57,6 +57,9 @@
                         <a class="nav-link" href="<%= ResolveUrl("~/Contact.aspx") %>">
                             <i class="fas fa-envelope"></i> Contact
                         </a>
+                        <a class="nav-link" href="<%= ResolveUrl("~/Feedback.aspx") %>">
+                            <i class="fas fa-comments"></i> Feedback
+                        </a>
                     </div>
 
                     <!-- Right Side Icons -->
@@ -66,7 +69,7 @@
                             <i class="fas fa-search"></i>
                         </button>
 
-                        <!-- ✅ FIXED: Cart Icon with Dynamic Badge -->
+                        <!-- Cart Icon with Dynamic Badge -->
                         <a class="icon-btn cart-icon" href="<%= ResolveUrl("~/Cart/Cart.aspx") %>" title="Shopping Cart">
                             <i class="fas fa-shopping-cart"></i>
                             <asp:Label ID="lblCartCount" runat="server" CssClass="badge" Text="0" Visible="false"></asp:Label>
@@ -90,7 +93,6 @@
                                     <a href="<%= ResolveUrl("~/Account/Profile.aspx") %>" class="dropdown-item">
                                         <i class="fas fa-user-edit"></i> My Profile
                                     </a>
-                                    <!-- ✅ FIXED: Changed from ~/Orders/MyOrders.aspx to ~/Cart/CartHistory.aspx -->
                                     <a href="<%= ResolveUrl("~/Cart/CartHistory.aspx") %>" class="dropdown-item">
                                         <i class="fas fa-shopping-bag"></i> My Orders
                                     </a>
@@ -143,6 +145,9 @@
                     <a class="mobile-nav-link" href="<%= ResolveUrl("~/Contact.aspx") %>">
                         <i class="fas fa-envelope"></i> Contact
                     </a>
+                    <a class="mobile-nav-link" href="<%= ResolveUrl("~/Feedback.aspx") %>">
+                        <i class="fas fa-comments"></i> Feedback
+                    </a>
 
                     <hr class="mobile-nav-divider" />
 
@@ -156,7 +161,6 @@
                         <a class="mobile-nav-link" href="<%= ResolveUrl("~/Account/Profile.aspx") %>">
                             <i class="fas fa-user-edit"></i> My Profile
                         </a>
-                        <!-- ✅ FIXED: Changed from ~/Orders/MyOrders.aspx to ~/Cart/CartHistory.aspx -->
                         <a class="mobile-nav-link" href="<%= ResolveUrl("~/Cart/CartHistory.aspx") %>">
                             <i class="fas fa-shopping-bag"></i> My Orders
                         </a>
@@ -218,8 +222,7 @@
                             <li><a href="#">Help Center</a></li>
                             <li><a href="<%= ResolveUrl("~/Cart/CartHistory.aspx") %>">Track Order</a></li>
                             <li><a href="#">Returns</a></li>
-                            <!-- ✅ FIXED: Removed Feedback.aspx link (doesn't exist yet) -->
-                            <li><a href="<%= ResolveUrl("~/Contact.aspx") %>">Feedback</a></li>
+                            <li><a href="<%= ResolveUrl("~/Feedback.aspx") %>">Feedback</a></li>
                         </ul>
                     </div>
 

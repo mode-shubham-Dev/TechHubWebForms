@@ -159,31 +159,31 @@ namespace TechHubWebForms.Admin
         protected global::System.Web.UI.WebControls.RangeValidator rvStock;
 
         /// <summary>
-        /// txtImageURL1 control.
+        /// fuImage1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtImageURL1;
+        protected global::System.Web.UI.WebControls.FileUpload fuImage1;
 
         /// <summary>
-        /// txtImageURL2 control.
+        /// fuImage2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtImageURL2;
+        protected global::System.Web.UI.WebControls.FileUpload fuImage2;
 
         /// <summary>
-        /// txtImageURL3 control.
+        /// fuImage3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtImageURL3;
+        protected global::System.Web.UI.WebControls.FileUpload fuImage3;
 
         /// <summary>
         /// txtDescription control.

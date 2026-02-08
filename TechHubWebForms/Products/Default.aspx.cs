@@ -17,6 +17,28 @@ namespace TechHubWebForms.Products
             }
         }
 
+        /// <summary>
+        /// Helper method to get image URL for display
+        /// </summary>
+        protected string GetProductImageUrl(object imageUrl)
+        {
+            string url = imageUrl?.ToString();
+
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                // Return placeholder if no image
+                return "https://via.placeholder.com/400x400/e2e8f0/64748b?text=No+Image";
+            }
+
+            // If it's a relative path, resolve it
+            if (!url.StartsWith("http"))
+            {
+                return ResolveUrl(url);
+            }
+
+            return url;
+        }
+
         private void LoadCategories()
         {
             try

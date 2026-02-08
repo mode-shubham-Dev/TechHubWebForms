@@ -10,10 +10,9 @@ namespace TechHubWebForms.DAL
     {
         public static void Seed(TechHubContext context)
         {
-            // Only seed if database is empty
             if (context.Users.Any())
             {
-                return; // Database already seeded
+                return; 
             }
 
             // Helper method to hash passwords

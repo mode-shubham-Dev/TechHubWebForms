@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechHub - ReadMe & Setup Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #f8fafc;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #3b82f6;
+            font-size: 32px;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #1e293b;
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3b82f6;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #475569;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .credentials-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+            .credentials-table th {
+                background: #3b82f6;
+                color: white;
+                padding: 12px;
+                text-align: left;
+                font-weight: 600;
+            }
+
+            .credentials-table td {
+                padding: 12px;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            .credentials-table tr:hover {
+                background: #f8fafc;
+            }
+
+        code {
+            background: #1e293b;
+            color: #10b981;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 20px;
+            text-align: center;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛒 TechHub E-Commerce Web Application</h1>
+        <p style="font-size: 16px; color: #64748b; margin-bottom: 30px;">
+            <strong>Project:</strong> Mobile Web & Multimedia Assignment<br>
+            <strong>Technology:</strong> ASP.NET Web Forms, Entity Framework 6, SQL Server<br>
+            <strong>Version:</strong> 1.0<br>
+            <strong>Date:</strong> February 2026
+        </p>
+
+        <!-- TEST CREDENTIALS -->
+        <h2>🔑 Test Credentials</h2>
+        <div class="info-box">
+            <strong>⚠️ Important:</strong> Use these credentials to test the application. All passwords are case-sensitive.
+        </div>
+
+        <table class="credentials-table">
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Access Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Administrator</strong></td>
+                    <td><code>admin@techhub.com</code></td>
+                    <td><code>Admin@123</code></td>
+                    <td>Full admin panel access + customer features</td>
+                </tr>
+                <tr>
+                    <td><strong>Customer 1</strong></td>
+                    <td><code>john@example.com</code></td>
+                    <td><code>Test@123</code></td>
+                    <td>Customer features only</td>
+                </tr>
+                <tr>
+                    <td><strong>Customer 2</strong></td>
+                    <td><code>jane@example.com</code></td>
+                    <td><code>Test@123</code></td>
+                    <td>Customer features only</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- SETUP INSTRUCTIONS -->
+        <h2>⚙️ Setup & Configuration Guide</h2>
+
+        <h3>Prerequisites</h3>
+        <ul>
+            <li><span class="icon">✓</span> Windows 10/11</li>
+            <li><span class="icon">✓</span> Visual Studio 2019/2022 (Community/Professional/Enterprise)</li>
+            <li><span class="icon">✓</span> SQL Server Express LocalDB (included with Visual Studio)</li>
+            <li><span class="icon">✓</span> .NET Framework 4.7.2 or higher</li>
+            <li><span class="icon">✓</span> Modern web browser (Chrome, Edge, Firefox)</li>
+        </ul>
+
+        <h3>Step 1: Extract Project Files</h3>
+        <ol>
+            <li>Extract the ZIP file to a location on your computer (e.g., <code>C:\Projects\TechHubWebForms</code>)</li>
+            <li>Make sure the path doesn't contain special characters or spaces</li>
+            <li>Ensure all files are unblocked (Right-click → Properties → Unblock)</li>
+        </ol>
+
+        <h3>Step 2: Open Solution in Visual Studio</h3>
+        <ol>
+            <li>Launch Visual Studio</li>
+            <li>Click <strong>File → Open → Project/Solution</strong></li>
+            <li>Navigate to the extracted folder</li>
+            <li>Select <code>TechHubWebForms.sln</code></li>
+            <li>Click <strong>Open</strong></li>
+        </ol>
+
+        <h3>Step 3: Restore NuGet Packages</h3>
+        <ol>
+            <li>In Solution Explorer, right-click on the solution</li>
+            <li>Select <strong>Restore NuGet Packages</strong></li>
+            <li>Wait for all packages to download and install</li>
+            <li>Required packages: EntityFramework 6.x, Bootstrap, jQuery</li>
+        </ol>
+
+        <h3>Step 4: Database Configuration</h3>
+        <div class="info-box">
+            <strong>Good News:</strong> The database is automatically created on first run using Code-First migrations!
+        </div>
+
+        <p><strong>Connection String Location:</strong> <code>Web.config</code></p>
+        <div class="code-block">
+            &lt;connectionStrings&gt;
+            &lt;add name="TechHubConnection"
+            connectionString="Data Source=(LocalDb)\MSSQLLocalDB;
+            Initial Catalog=TechHub;
+            Integrated Security=True"
+            providerName="System.Data.SqlClient" /&gt;
+            &lt;/connectionStrings&gt;
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ Note:</strong> If database creation fails, check if SQL Server LocalDB is installed. Run <code>sqllocaldb info</code> in Command Prompt to verify.
+        </div>
+
+        <h3>Step 5: Build the Solution</h3>
+        <ol>
+            <li>Press <code>Ctrl + Shift + B</code> or click <strong>Build → Build Solution</strong></li>
+            <li>Check the Output window for any errors</li>
+            <li>All errors should be resolved before running</li>
+        </ol>
+
+        <h3>Step 6: Run the Application</h3>
+        <ol>
+            <li>Press <code>F5</code> or click the green <strong>Play</strong> button (IIS Express)</li>
+            <li>Wait for the browser to open automatically</li>
+            <li>Default URL: <code>http://localhost:XXXXX/</code></li>
+            <li>The home page should load with product categories</li>
+        </ol>
+
+        <div class="success-box">
+            <strong>✓ Success!</strong> If you see the TechHub home page, the setup is complete!
+        </div>
+
+        <!-- DATABASE SCHEMA -->
+        <h2>🗄️ Database Schema</h2>
+        <p>The application uses the following database tables:</p>
+
+        <div class="feature-grid">
+            <div class="feature-item">
+                <strong>Users</strong><br>
+                <small>User accounts with roles (Admin/Customer)</small>
+            </div>
+            <div class="feature-item">
+                <strong>Categories</strong><br>
+                <small>Product categories (6 categories)</small>
+            </div>
+            <div class="feature-item">
+                <strong>Products</strong><br>
+                <small>Product catalog (24+ products)</small>
+            </div>
+            <div class="feature-item">
+                <strong>Orders</strong><br>
+                <small>Customer orders with status tracking</small>
+            </div>
+            <div class="feature-item">
+                <strong>OrderDetails</strong><br>
+                <small>Individual items in each order</small>
+            </div>
+            <div class="feature-item">
+                <strong>Cart</strong><br>
+                <small>Shopping cart items</small>
+            </div>
+            <div class="feature-item">
+                <strong>Wishlist</strong><br>
+                <small>Customer wishlists</small>
+            </div>
+            <div class="feature-item">
+                <strong>Feedback</strong><br>
+                <small>Product ratings and reviews</small>
+            </div>
+        </div>
+
+        <!-- FEATURES -->
+        <h2>✨ Features Implemented</h2>
+
+        <h3>Customer Features</h3>
+        <ul>
+            <li><span class="icon">✓</span> User Registration & Login (Forms Authentication)</li>
+            <li><span class="icon">✓</span> Profile Management</li>
+            <li><span class="icon">✓</span> Product Catalog with Search, Filter & Sort</li>
+            <li><span class="icon">✓</span> Product Details Page</li>
+            <li><span class="icon">✓</span> Shopping Cart (Add/Update/Remove)</li>
+            <li><span class="icon">✓</span> Checkout & Order Placement</li>
+            <li><span class="icon">✓</span> Order History</li>
+            <li><span class="icon">✓</span> Wishlist Management</li>
+            <li><span class="icon">✓</span> Product Feedback & Ratings</li>
+        </ul>
+
+        <h3>Admin Features</h3>
+        <ul>
+            <li><span class="icon">✓</span> Admin Dashboard (Statistics, Charts, Alerts)</li>
+            <li><span class="icon">✓</span> Manage Products (CRUD with File Upload)</li>
+            <li><span class="icon">✓</span> Manage Categories (CRUD)</li>
+            <li><span class="icon">✓</span> Manage Users (RUD - Read, Update, Delete)</li>
+            <li><span class="icon">✓</span> Manage Orders (Status Updates: Pending → Delivered)</li>
+        </ul>
+
+        <h3>Technical Features</h3>
+        <ul>
+            <li><span class="icon">✓</span> ASP.NET Web Forms with Master Pages</li>
+            <li><span class="icon">✓</span> Entity Framework 6 Code-First</li>
+            <li><span class="icon">✓</span> Forms Authentication & Authorization</li>
+            <li><span class="icon">✓</span> Role-Based Access Control</li>
+            <li><span class="icon">✓</span> Advanced Controls (GridView, Repeater, DataList)</li>
+            <li><span class="icon">✓</span> Data Binding & Validation</li>
+            <li><span class="icon">✓</span> Responsive Design (Mobile-Friendly)</li>
+            <li><span class="icon">✓</span> File Upload for Product Images</li>
+            <li><span class="icon">✓</span> Email Notifications (Order Confirmation)</li>
+        </ul>
+
+        <!-- TESTING GUIDE -->
+        <h2>🧪 Testing Guide</h2>
+
+        <h3>Test as Customer</h3>
+        <ol>
+            <li><strong>Register:</strong> Create new account at <code>/Account/Register.aspx</code></li>
+            <li><strong>Login:</strong> Use <code>john@example.com</code> / <code>Test@123</code></li>
+            <li><strong>Browse Products:</strong> Click "Products" in navigation</li>
+            <li><strong>Add to Cart:</strong> Click "Add to Cart" on product details</li>
+            <li><strong>Checkout:</strong> Complete order with test payment info</li>
+            <li><strong>View Orders:</strong> Check "My Orders" from user menu</li>
+            <li><strong>Add to Wishlist:</strong> Save products for later</li>
+            <li><strong>Leave Feedback:</strong> Rate and review products</li>
+        </ol>
+
+        <h3>Test as Admin</h3>
+        <ol>
+            <li><strong>Login:</strong> Use <code>admin@techhub.com</code> / <code>Admin@123</code></li>
+            <li><strong>Dashboard:</strong> View statistics and alerts</li>
+            <li><strong>Manage Products:</strong> Add/Edit/Delete products with images</li>
+            <li><strong>Manage Categories:</strong> Organize product categories</li>
+            <li><strong>Manage Users:</strong> Update user details, change roles</li>
+            <li><strong>Manage Orders:</strong> Update order status (Pending → Delivered)</li>
+        </ol>
+
+        <!-- TROUBLESHOOTING -->
+        <h2>🔧 Troubleshooting</h2>
+
+        <h3>Issue: Database Not Created</h3>
+        <div class="code-block">
+            Solution:
+            1. Check SQL Server LocalDB is installed: sqllocaldb info
+            2. Delete existing database: sqllocaldb delete MSSQLLocalDB
+            3. Rebuild solution and run again
+        </div>
+
+        <h3>Issue: Build Errors</h3>
+        <div class="code-block">
+            Solution:
+            1. Clean Solution: Build → Clean Solution
+            2. Restore NuGet Packages: Right-click solution → Restore NuGet Packages
+            3. Rebuild: Build → Rebuild Solution
+        </div>
+
+        <h3>Issue: 404 Not Found</h3>
+        <div class="code-block">
+            Solution:
+            1. Check URL is correct (e.g., /Default.aspx, not /Home)
+            2. Verify file exists in Solution Explorer
+            3. Check file properties: Build Action = Content
+        </div>
+
+        <h3>Issue: Images Not Showing</h3>
+        <div class="code-block">
+            Solution:
+            1. Check Content/Images/Products/ folder exists
+            2. Upload images via Admin → Manage Products
+            3. Verify image URLs in database are correct
+        </div>
+
+        <!-- PROJECT STRUCTURE -->
+        <h2>📁 Project Structure</h2>
+        <div class="code-block">
+            TechHubWebForms/
+            ├── Account/               (Login, Register, Profile)
+            ├── Admin/                 (Dashboard, Manage pages)
+            ├── Cart/                  (Shopping cart, Checkout, History)
+            ├── Products/              (Product listing, Details)
+            ├── Content/
+            │   ├── Images/            (Product images, category icons)
+            │   └── Site.css           (Main stylesheet)
+            ├── DAL/                   (Data Access Layer - EF Context)
+            ├── Models/                (Entity models - 8 models)
+            ├── App_Data/              (Database files - auto-created)
+            ├── Site.Master            (Master page with navigation)
+            ├── Default.aspx           (Home page)
+            ├── About.aspx             (About page)
+            ├── Contact.aspx           (Contact form)
+            ├── Feedback.aspx          (Product feedback)
+            ├── Wishlist.aspx          (User wishlist)
+            ├── Web.config             (Configuration file)
+            └── ReadMe.html            (This file)
+        </div>
+
+        <!-- SUPPORT -->
+        <h2>📞 Support & Contact</h2>
+        <div class="info-box">
+            <strong>Project Website:</strong> TechHub E-Commerce Platform<br>
+            <strong>Technology Stack:</strong> ASP.NET Web Forms, Entity Framework 6, SQL Server<br>
+            <strong>Assignment:</strong> Mobile Web & Multimedia - Individual Assignment<br>
+            <strong>Institution:</strong> Asia Pacific University of Technology and Innovation
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p><strong>© 2026 TechHub E-Commerce. All rights reserved.</strong></p>
+            <p style="margin-top: 10px; font-size: 14px;">
+                Built with ❤️ using ASP.NET Web Forms | Mobile Web & Multimedia Assignment
+            </p>
+        </div>
+    </div>
+</body>
+</html>
