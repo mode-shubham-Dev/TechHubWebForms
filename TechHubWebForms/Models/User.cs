@@ -38,7 +38,6 @@ namespace TechHubWebForms.Models
 
         public bool IsActive { get; set; } = true;
 
-        // Navigation Properties
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }

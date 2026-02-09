@@ -25,7 +25,6 @@ namespace TechHubWebForms.Models
 
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
-        // Navigation Property
         public virtual ICollection<Product> Products { get; set; }
 
         public Category()
